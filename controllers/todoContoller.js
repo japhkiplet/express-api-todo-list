@@ -36,16 +36,16 @@ export const createTodo = async (req, res) => {
 //get a todo
 export const getTodo = async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id ,name} = req.params;
         let pool = await sql.connect(config.sql)
-        const result =await pool.request()
-        .input('id',sql.Int,id)
-        .input('name',sql.VarChar,name)
-        .query("select * from student where id =@id")
-
+        const result = await pool.request()
+            .input('id', sql.Int, id)
+            .input('name', sql.VarChar, name)
+            .query("select * from student where id =@id")
+        res.status(200).json(result)
     } catch (error) {
         res.status(200).json(error);
-    }finally{
+    } finally {
         sql.close()
     }
 
@@ -53,10 +53,36 @@ export const getTodo = async (req, res) => {
 
 // update todo
 export const updateTodos = async (req, res) => {
-    res.send("update a todo")
+    try {
+        const { id, name } = req.params;
+        let pool = await sql.connect(config.sql)
+         await pool.request()
+            .input('id', sql.Int, id)
+            .input('name', sql.VarChar, name)
+            .query("update student set name='jimie where id=@id")
+        res.status(200).json({ message: 'todo was update successfully' })
+    } catch (error) {
+        res.status(200).json(error);
+
+    }finally{
+        sql.close()
+    }
 }
 
 //delete todo
 export const deleteTodos = async (req, res) => {
+    try {
+        const { id, name } = req.params;
+        let pool = await sql.connect(config.sql)
+        await pool.request()
+            .input('id', sql.Int, id)
+            .input('name', sql.VarChar, name)
+            .query("delete from student where name=@name")
+        res.status(200).json({ message: 'todo was deleted successfully' })
+    } catch (error) {
+        res.status(200).json(error);
 
+    }finally{
+        sql.close()
+    }
 }
