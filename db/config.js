@@ -17,14 +17,12 @@ const config ={
     host: host,
     url: hostUrl,
     sql:{
-        server: sqlServer,
-        database: sqlDb,
-        port: sqlPort,
         user: sqlUser,
         password: sqlPwd,
+        server: "CHESERET",
+        database: sqlDb,
         options: {
-            encryt: sqlEncrypt,
-            enableArithAbort: true,
+            encryt: false,
             trustServerCertificate:true
         }
 

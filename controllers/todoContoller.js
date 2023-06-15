@@ -11,9 +11,7 @@ export const getTodos = async (req, res) => {
     } catch (error) {
         res.json(error);
 
-    } finally {
-        sql.close();
-    }
+    } 
 }
 
 //create todos
