@@ -1,13 +1,24 @@
-import {
-  getTodos,
-  createTodo,
-  getTodo,
-  updateTodos,
-  deleteTodos,
-} from "../controllers/todoContoller.js";
+import {  getTodo, getTodos, createTodo, updateTodo, deleteTodo } from '../controllers/todoContoller.js';
+import { login, register, loginRequired } from '../controllers/usecontroller.js'
 
-const todoRoutes = (app) => {
-  app.route("/todos").get(getTodos).post(createTodo);
-  app.route("/todos/:id").get(getTodo).put(updateTodos).delete(deleteTodos);
+const routes = (app) => {
+    //todo routes
+    app.route('/todos')
+        // .get( getTodos)
+        .post( createTodo);
+
+    app.route('/todos/:id')
+        .put(loginRequired, updateTodo)
+        .get(loginRequired, getTodo)
+        .delete(loginRequired, deleteTodo);
+
+    // auth routes
+    app.route('/auth/register')
+        .post(register);
+
+    app.route('/auth/login')
+        .post(login);
+
+
 };
-export default todoRoutes;
+export default routes;

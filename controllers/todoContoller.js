@@ -6,10 +6,10 @@ import { request } from 'express';
 export const getTodos = async (req, res) => {
     try {
         let pool = await sql.connect(config.sql);
-        const results = await pool.request().query("select * from student");
-        res.json(results);
+        const results = await pool.request().query('select * from student');
+        return res.json(results);
     } catch (error) {
-        res.status(200).json({ error: "an error occured" });
+        res.json(error);
 
     } finally {
         sql.close();
@@ -27,7 +27,7 @@ export const createTodo = async (req, res) => {
             .query("insert into student (id,name) values(@id,@name)");
         res.status(200).json({ message: 'todo was created successfully' })
     } catch (error) {
-        res.status(200).json(error);
+        res.status(400).json(error);
     } finally {
         sql.close();
     }
@@ -44,7 +44,7 @@ export const getTodo = async (req, res) => {
             .query("select * from student where id =@id")
         res.status(200).json(result)
     } catch (error) {
-        res.status(200).json(error);
+        res.status(400).json(error);
     } finally {
         sql.close()
     }
@@ -52,7 +52,7 @@ export const getTodo = async (req, res) => {
 }
 
 // update todo
-export const updateTodos = async (req, res) => {
+export const updateTodo = async (req, res) => {
     try {
         const { id, name } = req.params;
         let pool = await sql.connect(config.sql)
@@ -70,7 +70,7 @@ export const updateTodos = async (req, res) => {
 }
 
 //delete todo
-export const deleteTodos = async (req, res) => {
+export const deleteTodo = async (req, res) => {
     try {
         const { id, name } = req.params;
         let pool = await sql.connect(config.sql)
